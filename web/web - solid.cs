@@ -1,6 +1,6 @@
 # WEB - SOLID
 
-Becoming a better developer by using the SOLID design principles | https://www.youtube.com/watch?v=rtmFCcjEgEw
+Becoming a better developer by using the SOLID design principles by Katerina Trajchevska | https://www.youtube.com/watch?v=rtmFCcjEgEw
 
 /** The purpose of SOLID design principles */
 - To make the code more maintable.
@@ -184,3 +184,35 @@ class Notifications
 /** High-level modules should not depend on  low-level modules. Both should depend on abstractions */
 - Never depend on anything concrete, only depend on abstractions.
 - Able to change an implementation easily without altering the high level code.
+
+// Bad //
+public function index(User $user)
+{
+	$users = $user->where('created_at', '>=', Carbon::yesterday())->get();
+	return response()->json(compact('users'), 200);
+}
+
+// Good //
+class UserRepository implements UserRepositoryInterface
+{
+	public function getAfterDate(Carbon $date) { return User::where('created_at', '>=', $date); }
+	public function create($userData) 
+	{
+		$user = new User();
+		$user->name = $userData->name;
+		$user->save();
+		
+		return $user;
+	}
+}
+interface UserRepositoryInterface
+{
+	public function getAfterDate(Carbon $date);
+	public function create (object $user);
+}
+
+public function index(UserRepositoryInterface $user)
+{
+	$users = $user->getAfterDate(Carbon::yesterday());
+	return response()->json(compact('users'), 200);
+}
