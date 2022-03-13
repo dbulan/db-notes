@@ -1,7 +1,7 @@
 # VPS - NEW SUBDOMIAN
 
-$ sudo mkdir -p /var/www/your_domain 					// используя флаг -p для создания необходимых родительских директорий
-$ sudo chown -R $USER:$USER /var/www/your_domain		// $USER eto ja sejcas -> sammy, esli nuzen kto-to drugo to togda sami vpisivaem v mesto $USER
+$ sudo mkdir -p /var/www/your_domain 					// Используя флаг -p для создания необходимых родительских директорий
+$ sudo chown -R $USER:$USER /var/www/your_domain		// $USER - кем сейчас авторизированы, если нужен кто-то другой то вписываем john:john
 $ sudo chmod -R 755 /var/www/your_domain
 
 $ nano /var/www/your_domain/index.php
